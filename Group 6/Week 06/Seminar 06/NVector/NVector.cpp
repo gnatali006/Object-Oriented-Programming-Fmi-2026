@@ -1,6 +1,6 @@
 #include "NVector.h"
 
-NVector NVector::operator()(const std::function<int(int)>& f) {
+NVector NVector::operator()(const std::function<int(int)>& f) const {
     NVector result(size);
     //Example:  NVector squares = v([](int x) { return x * x; });
     for (int i = 0; i < size; i++)
@@ -60,6 +60,21 @@ NVector::operator bool() const
 void NVector::free()
 {
     delete[] data;
+    data=nullptr;
+}
+
+NVector& NVector::operator++() {
+    for (int i = 0; i < size; i++)
+    {
+        data[i]++;
+    }
+    return *this;
+}
+
+NVector NVector::operator++(int dummy) {
+    NVector temp(*this);
+    ++(*this);
+    return temp;
 }
 
 void NVector::copyFrom(const NVector& other)
